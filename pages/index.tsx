@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Sidebar from '../components/Sidebar';
 
 export default function Home() {
   return (
@@ -6,7 +7,10 @@ export default function Home() {
       <Head>
         <title>Spotify Clone :D</title>
       </Head>
-      <main></main>
+      {/* On met la taille du main à la taille de l'écran/fenêtre et on lui passe overflow-hidden pour formatter le */}
+      <main className="bg-black h-screen overflow-hidden">
+        <Sidebar />
+      </main>
     </div>
   );
 }
