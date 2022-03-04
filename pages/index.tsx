@@ -7,10 +7,12 @@ export default function Home() {
       <Head>
         <title>Spotify Clone :D</title>
       </Head>
-      {/* On met la taille du main à la taille de l'écran/fenêtre et on lui passe overflow-hidden pour formatter le */}
-      <main className="bg-black h-screen overflow-hidden">
-        <Sidebar />
-      </main>
+      {/* On met la taille de la div à la taille de l'écran/fenêtre et on lui passe overflow-hidden pour éviter que lorsque l'on va scroll vers le bas les titres on ne scoll pas la navbar */}
+      <div className="bg-black h-screen overflow-hidden">
+        <main>
+          <Sidebar />
+        </main>
+      </div>
     </div>
   );
 }

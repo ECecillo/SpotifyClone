@@ -21,16 +21,21 @@ function Sidebar() {
           <HomeIcon className="h-5 w-5" />
           <p>Home</p>
         </button>
+
         <button className="flex items-center space-x-2 hover:text-white">
           <SearchIcon className="h-5 w-5" />
           <p>Search me</p>
         </button>
+
         <button className="flex items-center space-x-2 hover:text-white">
           <LibraryIcon className="h-5 w-5" />
           <p>Your Library</p>
         </button>
+
         {/* On va mettre une bordure vers le bas en noir et on lui passe une taille que le compilateur de style va interpréter [0.1px] */}
         <hr className="border-t-[0.1px] border-gray-900" />
+
+
         {/* Autre partie de la sidebar */}
         <button className="flex items-center space-x-2 hover:text-white">
           <PlusCircleIcon className="h-5 w-5" />
@@ -47,6 +52,12 @@ function Sidebar() {
         {/* On va mettre une bordure vers le bas en noir et on lui passe une taille que le compilateur de style va interpréter [0.1px] */}
         <hr className="border-t-[0.1px] border-gray-900" />
         {/* Playlists que l'on va récupérer avec l'API */}
+        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
+        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
+        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
+        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
+        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
+        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
         <p className="cursor-pointer hover:text-white"> Playlist name...</p>
         <p className="cursor-pointer hover:text-white"> Playlist name...</p>
         <p className="cursor-pointer hover:text-white"> Playlist name...</p>
