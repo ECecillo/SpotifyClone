@@ -7,12 +7,25 @@ import {
   RssIcon,
 } from '@heroicons/react/outline';
 
-import {signOut, useSession} from "next-auth/react";
-import { useState } from 'react';
+import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from 'react';
+import useSpotify from "../hooks/useSpotify"
+
 
 function Sidebar() {
-  const {data : session, status} = useSession();
+  const spotifyApi = useSpotify();
+  const { data: session, status } = useSession();
   const [playlists, setPlaylists] = useState([]);
+
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getUserPlaylists().then((data) => {
+        setPlaylists(data.body.items);
+      })
+    }
+  }, [session, spotifyApi]);
+
+
   return (
     /* Met le texte en gris, p-5 : padding de 5, text-sm : redimenssionne le texte en fonction des breakpoints réduit la taille pour version mobile. */
     /* Border-r met une bodure juste sur la droite et met à la couleur noir */
@@ -61,18 +74,9 @@ function Sidebar() {
         {/* On va mettre une bordure vers le bas en noir et on lui passe une taille que le compilateur de style va interpréter [0.1px] */}
         <hr className="border-t-[0.1px] border-gray-900" />
         {/* Playlists que l'on va récupérer avec l'API */}
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
-        <p className="cursor-pointer hover:text-white"> Playlist name...</p>
+        {playlists.map((playlist) => (
+          <p key={playlist.id} className="cursor-pointer hover:text-white">{playlist.name}</p>
+        ))}
       </div>
     </div>
   );
