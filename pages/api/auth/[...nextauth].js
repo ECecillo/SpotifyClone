@@ -24,7 +24,7 @@ async function refreshAccessToken(token) {
     console.error(error);
     return {
       ...token, // On retourne le token qui a produit l'erreur.
-      error: 'refreshAccessToken Error',
+      error: 'RefreshAccessTokenError',
     };
   }
 }
