@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { ChevronDownIcon } from '@heroicons/react/outline';
-import {shuffle} from "lodash"
+import { shuffle } from "lodash"
+import { playlistState, playlistIdState } from '../atoms/playlistAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import useSpotify from '../hooks/useSpotify';
 
 const colors = [
     "from-indigo-500",
@@ -14,11 +17,27 @@ const colors = [
 ];
 
 export default function Center() {
+    const spotifyApi = useSpotify();
     const { data: session } = useSession();
     const [color, setColor] = useState(null);
+    const playlistId = useRecoilValue(playlistIdState); // On récupère simplement l'ID, on a pas besoin de la passer en state puisqu'on ne veut pas la changer.
+    const [playlist, setPlaylist] = useRecoilState(playlistState); // On défini la playlist quand center va charger.
+
+
     useEffect(() => {
         setColor(shuffle(colors).pop());
-    },[]); // On first mount
+    }, [playlistId]); // On change la couleur quand la playlist change d'id.
+
+    useEffect(() => {
+        spotifyApi.getPlaylist(playlistId).then((data) => {
+            setPlaylist(data.body);
+        })
+            .catch((err) => {
+                console.log("Something went wrong !", err);
+            })
+    }, [spotifyApi, playlistId]);
+
+
 
     return (
         <div className="flex-grow text-white">
@@ -30,7 +49,12 @@ export default function Center() {
                 </div>
             </header>
             <section className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white padding-8`} >
-                <h1>Hello</h1>
+
+                <img className='h-44 w-44 shadow-2xl' src={playlist?.images?.[0]?.url} alt="Playlist Image" />
+                <div>
+                    <p>PLAYLIST</p>
+                    <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold'>{playlist?.name}</h1>
+                </div>
             </section>
         </div>
     )

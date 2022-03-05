@@ -10,12 +10,16 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from 'react';
 import useSpotify from "../hooks/useSpotify"
+import {playlistIdState} from "../atoms/playlistAtom"
+import { useRecoilState } from 'recoil';
 
 
 function Sidebar() {
   const spotifyApi = useSpotify();
   const { data: session, status } = useSession();
   const [playlists, setPlaylists] = useState([]);
+  const [playlistId, setPlaylistId] = useRecoilState(playlistIdState)
+  
 
   useEffect(() => {
     if (spotifyApi.getAccessToken()) {
@@ -75,7 +79,7 @@ function Sidebar() {
         <hr className="border-t-[0.1px] border-gray-900" />
         {/* Playlists que l'on va récupérer avec l'API */}
         {playlists.map((playlist) => (
-          <p key={playlist.id} className="cursor-pointer hover:text-white">{playlist.name}</p>
+          <p key={playlist.id} onClick={() => setPlaylistId(playlist.id)} className="cursor-pointer hover:text-white">{playlist.name}</p>
         ))}
       </div>
     </div>
