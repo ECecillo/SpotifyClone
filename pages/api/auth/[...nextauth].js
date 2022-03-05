@@ -4,16 +4,16 @@ import spotifyApi, { LOGIN_URL } from '../../../lib/spotify';
 
 async function refreshAccessToken(token) {
   try {
+    console.log("refreshAccessToken Start");
     spotifyApi.setAccessToken(token.accessToken);
     spotifyApi.setRefreshToken(token.refreshToken);
     // Destructure l'objet de la réponse:
     // http://michaelthelin.se/spotify-web-api-node/#refreshAccessToken
     const { body: refreshedToken } = await spotifyApi.refreshAccessToken(); // Met à jour l'access Token.
 
-    console.log('REFRESHED TOKEN IS ', refreshedToken);
     return {
       ...token, // Le nouveau token.
-      accessToken: refreshedToken.access_Token,  // Récupère le nouvelle access token.
+      accessToken: refreshedToken.access_token,  // Récupère le nouvelle access token.
       accessTokenExpires: Date.now + refreshedToken.expires_in * 1000, // Calcule l'heure et la date à laquelle le prochain token expirera que l'on multiplie par 1000 pour avois un résultat sous la forme d'heure et pas de ms.
 
       // Remplace notre ancien refresh token si on en reçoit un sinon reprend l'ancien.

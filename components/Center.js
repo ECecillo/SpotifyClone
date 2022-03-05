@@ -5,6 +5,8 @@ import { shuffle } from "lodash"
 import { playlistState, playlistIdState } from '../atoms/playlistAtom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import useSpotify from '../hooks/useSpotify';
+import Songs from "../components/Songs"
+
 
 const colors = [
     "from-indigo-500",
@@ -29,9 +31,10 @@ export default function Center() {
     }, [playlistId]); // On change la couleur quand la playlist change d'id.
 
     useEffect(() => {
-        spotifyApi.getPlaylist(playlistId).then((data) => {
-            setPlaylist(data.body);
-        })
+        spotifyApi.getPlaylist(playlistId)
+            .then((data) => {
+                setPlaylist(data.body);
+            })
             .catch((err) => {
                 console.log("Something went wrong !", err);
             })
@@ -40,7 +43,8 @@ export default function Center() {
 
 
     return (
-        <div className="flex-grow text-white">
+        // overflow-y-scroll et scrollbar-hide permettent de faire défiler les éléments et de les afficher au fur et à mesure.
+        <div className="flex-grow text-white h-screen overflow-y-scroll scrollbar-hide">
             <header className='absolute top-5 right-8'>
                 <div className="flex items-center bg-black space-x-3 text-white opacity-90 hover:opacity-80 cursor-pointer rounded-full p-1 pr-2">
                     <img className="rounded-full w-10 h-10" src={session?.user.image} alt="Profile Image" />
@@ -48,7 +52,7 @@ export default function Center() {
                     <ChevronDownIcon className='h-5 w-5' />
                 </div>
             </header>
-            <section className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white padding-8`} >
+            <section className={`flex items-end space-x-7 bg-gradient-to-b to-black ${color} h-80 text-white p-8`} >
 
                 <img className='h-44 w-44 shadow-2xl' src={playlist?.images?.[0]?.url} alt="Playlist Image" />
                 <div>
@@ -56,6 +60,10 @@ export default function Center() {
                     <h1 className='text-2xl md:text-3xl xl:text-5xl font-bold'>{playlist?.name}</h1>
                 </div>
             </section>
+
+            <div>
+                <Songs />
+            </div>
         </div>
     )
 }
