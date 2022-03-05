@@ -2,6 +2,9 @@ import Head from 'next/head';
 import Sidebar from '../components/Sidebar';
 import Center from '../components/Center'
 import { getSession, GetSessionParams } from 'next-auth/react';
+import Player from "../components/Player"
+
+
 export default function Home() {
   return (
     < div className="bg-black h-screen overflow-hidden" >
@@ -10,6 +13,9 @@ export default function Home() {
         <Sidebar />
         <Center />
       </main>
+      <div className='sticky bottom-0'>
+          <Player />
+      </div>
     </div >
   );
 }
