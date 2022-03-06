@@ -70,7 +70,7 @@ function Sidebar() {
           <HeartIcon className="h-5 w-5" />
           <p>Liked Songs</p>
         </button>
-        <button className="flex items-center space-x-2 hover:text-white">
+        <button className="flex items-center space-x-2 text-green-500 hover:text-white">
           <RssIcon className="h-5 w-5" />
           <p>Your Episodes</p>
         </button>
